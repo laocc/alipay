@@ -1,0 +1,20 @@
+{
+  "name": "laocc/alipay",
+  "description": "for AliPay 支付宝服务商、直连商户",
+  "homepage": "https://github.com/laocc/alipay",
+  "authors": [
+    {
+      "name": "fazo",
+      "email": "fazo@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">7.4.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "laocc\\alipay\\": "src/"
+    }
+  }
+}
