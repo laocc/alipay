@@ -7,7 +7,6 @@ use function esp\helper\root;
 
 class Entity
 {
-
     public string $appid;
     public string $mchid;
     public string $publicSerial;
