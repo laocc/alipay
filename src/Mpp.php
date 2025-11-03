@@ -7,12 +7,16 @@ use laocc\alipay\extend\Aes;
 class Mpp extends _AliBase
 {
 
-
-    public function parseMobile(array $signed, string $sessionKey)
+    /**
+     * @param array $signed
+     * @param string $sessionKey
+     * @return array|string
+     */
+    public function parseMobile(array $signed, string $sessionKey = ''): array|string
     {
         $aes = 'tD5pGmQHxWDUlBxwmMoOVg==';
         $mobile = Aes::decrypt($signed['encryptedData'], $aes);
-        $mobile = json_decode($mobile, true);
+        if (is_string($mobile)) return $mobile;
 
         return ['phone' => $mobile['mobile']];
     }

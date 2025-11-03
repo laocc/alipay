@@ -73,33 +73,30 @@ class Aes
 
     /**
      * AES解密方法
-     * @param string $content 密文（Base64编码）
-     * @param string $key AES密钥（Base64编码）
-     * @return string 解密后的原文
-     * @throws Exception
+     *
+     * @param string $content
+     * @param string $key
+     * @return array|string
      */
-    public static function decrypt(string $content, string $key)
+    public static function decrypt(string $content, string $key): array|string
     {
         // 1. 解码Base64编码的密钥（对应Java的Base64.decodeBase64(key.getBytes())）
         $keyDecoded = base64_decode($key);
-        if ($keyDecoded === false) {
-            throw new Exception("密钥Base64解码失败");
-        }
+        if ($keyDecoded === false) return "密钥Base64解码失败";
 
         // 验证密钥长度（AES支持16/24/32字节，对应128/192/256位）
         $keyLength = strlen($keyDecoded);
         $validLengths = [16, 24, 32];
         if (!in_array($keyLength, $validLengths)) {
-            throw new Exception("AES密钥长度必须为" . implode('/', $validLengths) . "字节（对应128/192/256位）");
+            return "AES密钥长度必须为" . implode('/', $validLengths) . "字节（对应128/192/256位）";
         }
 
         // 2. 构建OpenSSL算法模式（Java中固定为AES/CBC/PKCS5Padding）
         $cipherMethod = strtolower("AES-" . ($keyLength * 8) . "-CBC"); // 如AES-128-CBC
         $sure = openssl_get_cipher_methods();
-//        print_r($sure);
 
         if (!in_array($cipherMethod, $sure)) {
-            throw new Exception("不支持的加密模式: {$cipherMethod}");
+            return "不支持的加密模式: {$cipherMethod}";
         }
 
         // 3. 创建16字节全零IV向量（对应Java的128bit全零IV）
@@ -107,13 +104,9 @@ class Aes
 
         // 4. 处理密文：先按指定字符集转换，再Base64解码（对应Java的content.getBytes(charset) + Base64.decodeBase64）
         $contentBytes = mb_convert_encoding($content, 'utf-8'); // 转换为指定字符集的字节序列
-        if ($contentBytes === false) {
-            throw new Exception("密文转换为指定字符集失败: utf8");
-        }
+        if ($contentBytes === false) return "密文转换为指定字符集失败: utf8";
         $encryptedData = base64_decode($contentBytes);
-        if ($encryptedData === false) {
-            throw new Exception("密文Base64解码失败");
-        }
+        if ($encryptedData === false) return "密文Base64解码失败";
 
         // 5. 执行解密（对应Java的deCipher.doFinal）
         $decrypted = openssl_decrypt(
@@ -126,11 +119,12 @@ class Aes
 
         if ($decrypted === false) {
             $error = openssl_error_string();
-            throw new Exception("解密失败: {$error}");
+            return "解密失败: {$error}";
         }
 
-        // 6. 将解密后的二进制数据转换为指定字符集的字符串（对应Java的new String(bytes)）
-        return mb_convert_encoding($decrypted, 'utf-8');
+        $json = mb_convert_encoding($decrypted, 'utf-8');
+
+        return json_decode($json, true);
     }
 
 
