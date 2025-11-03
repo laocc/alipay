@@ -38,7 +38,11 @@ class Refund extends _AliBase
         ];
     }
 
-    public function query(array $params): array
+    /**
+     * @param array $params
+     * @return array|string
+     */
+    public function query(array $params): array|string
     {
         $model = array();
         $model['out_request_no'] = $params['number'];// 本平台退款单号
@@ -48,6 +52,7 @@ class Refund extends _AliBase
         $params['verify'] = false;//暂不验证签名
         $params['key'] = 'alipay_trade_fastpay_refund_query_response';
         $data = $this->post('alipay.trade.fastpay.refund.query', $params, $model);
+        if (is_string($data)) return $data;
 
         if (!isset($data['refund_status'])) {
             return [

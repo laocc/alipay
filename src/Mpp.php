@@ -41,6 +41,7 @@ class Mpp extends _AliBase
 
         $params['key'] = 'alipay_system_oauth_token_response';
         $data = $this->post('alipay.system.oauth.token', $params, $postData);
+        if (is_string($data)) return $data;
 
         return [
             'access_token' => $data['access_token'],
@@ -66,6 +67,7 @@ class Mpp extends _AliBase
 
         $params['key'] = 'alipay_open_app_qrcode_create_response';
         $data = $this->post('alipay.open.app.qrcode.create', $params, $postData);
+        if (is_string($data)) return $data;
 
         return [
             'access_token' => $data['access_token'],

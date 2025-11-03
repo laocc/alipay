@@ -58,9 +58,9 @@ class Payment extends _AliBase implements PayFace
      * https://opendocs.alipay.com/mini/83b6c9a9_alipay.trade.query?scene=common&pathHash=354e8be3
      *
      * @param array $params
-     * @return array
+     * @return array|string
      */
-    public function query(array $params): array
+    public function query(array $params): array|string
     {
         $model = array();
         $model['out_trade_no'] = $params['number'];// 设置商户订单号
@@ -69,6 +69,7 @@ class Payment extends _AliBase implements PayFace
 
         $params['key'] = 'alipay_trade_query_response';
         $data = $this->post('alipay.trade.query', $params, $model);
+        if (is_string($data)) return $data;
 
         $state = [
             'WAIT_BUYER_PAY' => '等待买家付款',
