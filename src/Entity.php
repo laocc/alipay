@@ -18,7 +18,7 @@ class Entity
     {
         $this->appid = $conf['appid'];
         $this->mchid = $conf['mchid'] ?? $conf['mchID'];
-        $this->aesKey = $conf['aeskey'] ?? '';
+        $this->aesKey = $conf['aeskey'] ?? ($conf['aesKey'] ?? '');
         $this->debug = boolval($conf['debug'] ?? 0);
         $publicSerial = root($conf['publicSerial']);
         $privateSerial = root($conf['privateSerial']);
