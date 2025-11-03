@@ -59,7 +59,7 @@ class Mpp extends _AliBase
         $postData = [
             'url_param' => $params['page'] ?? 'init',
             'query_param' => $query,
-            'describe' => $params['desc'],
+            'describe' => $params['desc'] ?? date('Y-m-d H:i:s'),
             'color' => $params['color'] ?? '0x000000',
             'size' => $params['size'] ?? 's',
         ];
