@@ -70,11 +70,9 @@ class Mpp extends _AliBase
         if (is_string($data)) return $data;
 
         return [
-            'access_token' => $data['access_token'],
-            'refresh' => $data['refresh_token'],
-            'expires' => $data['expires_in'],
-            'openid' => $data['open_id'],
-            'unionid' => $data['union_id'],
+            'base' => $data['qr_code_url'] ?? '',
+            'white' => $data['qr_code_url_circle_white'] ?? '',
+            'blue' => $data['qr_code_url_circle_blue'] ?? '',
         ];
     }
 
