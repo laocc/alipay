@@ -54,7 +54,7 @@ class Mpp extends _AliBase
 
     public function qrcode(array $params): array|string
     {
-        $query = $params['query'] ?? '';
+        $query = $params['query'] ?? ('time=' . date('YmdHis'));
         if (is_array($query)) $query = http_build_query($query);
 
         $postData = [
