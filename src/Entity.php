@@ -11,12 +11,14 @@ class Entity
     public string $mchid;
     public string $publicSerial;
     public string $privateSerial;
+    public string $aesKey;
     public bool $debug;
 
     public function __construct(array $conf)
     {
         $this->appid = $conf['appid'];
         $this->mchid = $conf['mchid'] ?? $conf['mchID'];
+        $this->aesKey = $conf['aeskey'] ?? '';
         $this->debug = boolval($conf['debug'] ?? 0);
         $publicSerial = root($conf['publicSerial']);
         $privateSerial = root($conf['privateSerial']);

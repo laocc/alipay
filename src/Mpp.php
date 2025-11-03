@@ -8,14 +8,15 @@ class Mpp extends _AliBase
 {
 
     /**
+     * aes解密得到手机号
+     *
      * @param array $signed
      * @param string $sessionKey
      * @return array|string
      */
     public function parseMobile(array $signed, string $sessionKey = ''): array|string
     {
-        $aes = 'tD5pGmQHxWDUlBxwmMoOVg==';
-        $mobile = Aes::decrypt($signed['encryptedData'], $aes);
+        $mobile = Aes::decrypt($signed['encryptedData'], $this->entity->aesKey);
         if (is_string($mobile)) return $mobile;
 
         return ['phone' => $mobile['mobile']];
