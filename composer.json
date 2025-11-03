@@ -14,7 +14,8 @@
   },
   "autoload": {
     "psr-4": {
-      "laocc\\alipay\\": "src/"
+      "laocc\\alipay\\": "src/",
+      "laocc\\alipay\\library\\": "library/"
     }
   }
 }
