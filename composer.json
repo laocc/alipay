@@ -1,6 +1,6 @@
 {
   "name": "laocc/alipay",
-  "description": "for AliPay 支付宝服务商、直连商户",
+  "description": "for AliPay 支付宝服务商、直连商户、小程序",
   "homepage": "https://github.com/laocc/alipay",
   "authors": [
     {
