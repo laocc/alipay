@@ -4,6 +4,7 @@ namespace laocc\alipay;
 
 use laocc\alipay\library\PayFace;
 use function esp\helper\rnd;
+use function esp\helper\money;
 
 class Payment extends _AliBase implements PayFace
 {
@@ -28,7 +29,7 @@ class Payment extends _AliBase implements PayFace
                 'status' => '',//状态
                 'number' => $post['out_biz_no'],//本平台订单号
                 'waybill' => '',//支付宝单号
-                'amount' => intval(floatval($post['refund_fee']) * 100),//金额
+                'amount' => money($post['refund_fee']),//金额
                 'time' => strtotime($post['gmt_refund']),
             ];
         }
@@ -47,7 +48,7 @@ class Payment extends _AliBase implements PayFace
             'status' => $post['trade_status'],//状态
             'number' => $post['out_trade_no'],//本平台订单号
             'waybill' => $post['trade_no'],//支付宝单号
-            'amount' => intval(floatval($post['total_amount']) * 100),//金额
+            'amount' => money($post['total_amount']),//金额
             'buyer' => $post['buyer_logon_id'],
             'desc' => $state[$post['trade_status']] ?? $post['trade_status'],
             'time' => strtotime($post['gmt_payment']),
@@ -83,7 +84,7 @@ class Payment extends _AliBase implements PayFace
             'status' => $data['trade_status'],//状态
             'number' => $data['out_trade_no'],//本平台订单号
             'waybill' => $data['trade_no'],//支付宝单号
-            'amount' => intval(floatval($data['total_amount']) * 100),//金额
+            'amount' => money($data['total_amount']),//金额
             'buyer' => $data['buyer_logon_id'],
             'desc' => $state[$data['trade_status']] ?? $data['trade_status'],
             'time' => strtotime($data['send_pay_date'] ?? ''),

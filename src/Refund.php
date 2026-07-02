@@ -3,6 +3,7 @@
 namespace laocc\alipay;
 
 use function esp\helper\rnd;
+use function esp\helper\money;
 
 class Refund extends _AliBase
 {
@@ -34,7 +35,7 @@ class Refund extends _AliBase
             'waybill' => $data['trade_no'],
             'number' => $data['out_trade_no'],
             'time' => strtotime($data['gmt_refund_pay']),
-            'amount' => intval(floatval($data['refund_fee']) * 100),
+            'amount' => money($data['refund_fee']),
         ];
     }
 
@@ -68,7 +69,7 @@ class Refund extends _AliBase
             'status' => $data['refund_status'],//状态
             'number' => $data['out_trade_no'],//本平台订单号
             'waybill' => $data['trade_no'],//支付宝单号
-            'amount' => intval(floatval($data['refund_amount']) * 100),//金额
+            'amount' => money($data['refund_amount']),//金额
             'desc' => $state[$data['refund_status']] ?? $data['refund_status'],
             'time' => strtotime($data['gmt_refund_pay'] ?? ''),
         ];
